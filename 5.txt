@@ -1,0 +1,316 @@
+Q)Write a C program to convert an infix expression into postfix notation and evaluate the postfix expression using Stack.
+
+
+#include <stdio.h>
+#include <ctype.h>
+
+char stack[50];
+int top = -1;
+
+void push(char x)
+{
+    stack[++top] = x;
+}
+
+char pop()
+{
+    return stack[top--];
+}
+
+int priority(char x)
+{
+    if(x == '+' || x == '-')
+        return 1;
+
+    if(x == '*' || x == '/')
+        return 2;
+
+    return 0;
+}
+
+int main()
+{
+    char infix[50], postfix[50];
+    int i, j = 0;
+
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+
+    for(i = 0; infix[i] != '\0'; i++)
+    {
+        if(isalnum(infix[i]))
+        {
+            postfix[j++] = infix[i];
+        }
+        else
+        {
+            while(top != -1 &&
+                  priority(stack[top]) >= priority(infix[i]))
+            {
+                postfix[j++] = pop();
+            }
+
+            push(infix[i]);
+        }
+    }
+
+    while(top != -1)
+        postfix[j++] = pop();
+
+    postfix[j] = '\0';
+
+    printf("Postfix = %s", postfix);
+
+    return 0;
+}
+
+1)Extend the program to evaluate prefix expressions. 
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int stack[50];
+int top = -1;
+
+void push(int x)
+{
+    stack[++top] = x;
+}
+
+int pop()
+{
+    return stack[top--];
+}
+
+int main()
+{
+    char exp[50];
+    int i, a, b, result;
+
+    printf("Enter prefix expression: ");
+    scanf("%s", exp);
+
+    for(i = strlen(exp) - 1; i >= 0; i--)
+    {
+        if(isdigit(exp[i]))
+        {
+            push(exp[i] - '0');
+        }
+        else
+        {
+            a = pop();
+            b = pop();
+
+            if(exp[i] == '+')
+                result = a + b;
+            else if(exp[i] == '-')
+                result = a - b;
+            else if(exp[i] == '*')
+                result = a * b;
+            else
+                result = a / b;
+
+            push(result);
+        }
+    }
+
+    printf("Result = %d", pop());
+
+    return 0;
+}
+
+2)Convert infix expressions to prefix notation. 
+
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char stack[100];
+int top = -1;
+
+void push(char ch)
+{
+    stack[++top] = ch;
+}
+
+char pop()
+{
+    return stack[top--];
+}
+
+int priority(char ch)
+{
+    if(ch == '^')
+        return 3;
+
+    if(ch == '*' || ch == '/')
+        return 2;
+
+    if(ch == '+' || ch == '-')
+        return 1;
+
+    return 0;
+}
+
+void reverse(char str[])
+{
+    int i, j;
+    char temp;
+
+    i = 0;
+    j = strlen(str) - 1;
+
+    while(i < j)
+    {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+
+        i++;
+        j--;
+    }
+}
+
+int main()
+{
+    char infix[100], prefix[100];
+    int i, j = 0;
+
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+
+    /* Reverse the expression */
+    reverse(infix);
+
+    /* Change brackets */
+    for(i = 0; infix[i] != '\0'; i++)
+    {
+        if(infix[i] == '(')
+            infix[i] = ')';
+        else if(infix[i] == ')')
+            infix[i] = '(';
+    }
+
+    /* Convert to postfix */
+    for(i = 0; infix[i] != '\0'; i++)
+    {
+        if(isalnum(infix[i]))
+        {
+            prefix[j++] = infix[i];
+        }
+        else if(infix[i] == '(')
+        {
+            push(infix[i]);
+        }
+        else if(infix[i] == ')')
+        {
+            while(top != -1 && stack[top] != '(')
+                prefix[j++] = pop();
+
+            pop();
+        }
+        else
+        {
+            while(top != -1 &&
+                  priority(stack[top]) > priority(infix[i]))
+            {
+                prefix[j++] = pop();
+            }
+
+            push(infix[i]);
+        }
+    }
+
+    while(top != -1)
+        prefix[j++] = pop();
+
+    prefix[j] = '\0';
+
+    /* Reverse postfix to get prefix */
+    reverse(prefix);
+
+    printf("Prefix expression = %s\n", prefix);
+
+    return 0;
+}
+
+3)Validate balanced parentheses in mathematical expressions. 
+
+#include <stdio.h>
+
+int main()
+{
+    char exp[100], stack[100];
+    int top = -1;
+    int i, balanced = 1;
+
+    printf("Enter expression: ");
+    scanf("%s", exp);
+
+    for(i = 0; exp[i] != '\0'; i++)
+    {
+        if(exp[i] == '(')
+        {
+            stack[++top] = '(';
+        }
+        else if(exp[i] == ')')
+        {
+            if(top == -1)
+            {
+                balanced = 0;
+                break;
+            }
+
+            top--;
+        }
+    }
+
+    if(top != -1)
+        balanced = 0;
+
+    if(balanced)
+        printf("Balanced Parentheses");
+    else
+        printf("Not Balanced");
+
+    return 0;
+}
+
+4)Implement an arithmetic expression evaluator supporting variables.
+
+#include <stdio.h>
+
+int main()
+{
+    int a, b, result;
+    char op;
+
+    printf("Enter value of A: ");
+    scanf("%d", &a);
+
+    printf("Enter operator (+ - * /): ");
+    scanf(" %c", &op);
+
+    printf("Enter value of B: ");
+    scanf("%d", &b);
+
+    if(op == '+')
+        result = a + b;
+    else if(op == '-')
+        result = a - b;
+    else if(op == '*')
+        result = a * b;
+    else if(op == '/')
+        result = a / b;
+    else
+    {
+        printf("Invalid operator");
+        return 0;
+    }
+
+    printf("Result = %d", result);
+
+    return 0;
+}
