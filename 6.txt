@@ -1,0 +1,297 @@
+Q)Write a C program to implement Stack using Linked List.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *top = NULL;
+
+void push(int x)
+{
+    struct Node *newNode;
+
+    newNode = malloc(sizeof(struct Node));
+
+    newNode->data = x;
+    newNode->next = top;
+    top = newNode;
+}
+
+void pop()
+{
+    struct Node *temp;
+
+    if(top == NULL)
+    {
+        printf("Stack Empty\n");
+        return;
+    }
+
+    temp = top;
+
+    printf("Popped = %d\n", top->data);
+
+    top = top->next;
+
+    free(temp);
+}
+
+void display()
+{
+    struct Node *temp = top;
+
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter element: ");
+        scanf("%d", &x);
+        push(x);
+    }
+
+    display();
+    pop();
+    display();
+
+    return 0;
+}
+
+SAMPLE PROGRAM – QUEUE USING LINKED LIST
+Question
+Implement Queue using Linked List.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *front = NULL;
+struct Node *rear = NULL;
+
+void enqueue(int x)
+{
+    struct Node *newNode;
+
+    newNode = malloc(sizeof(struct Node));
+
+    newNode->data = x;
+    newNode->next = NULL;
+
+    if(rear == NULL)
+    {
+        front = rear = newNode;
+    }
+    else
+    {
+        rear->next = newNode;
+        rear = newNode;
+    }
+}
+
+void dequeue()
+{
+    struct Node *temp;
+
+    if(front == NULL)
+    {
+        printf("Queue Empty\n");
+        return;
+    }
+
+    temp = front;
+
+    printf("Deleted = %d\n", front->data);
+
+    front = front->next;
+
+    if(front == NULL)
+        rear = NULL;
+
+    free(temp);
+}
+
+void display()
+{
+    struct Node *temp = front;
+
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter element: ");
+        scanf("%d", &x);
+        enqueue(x);
+    }
+
+    display();
+    dequeue();
+    display();
+
+    return 0;
+}
+
+
+1) is comapre theory que 
+
+2)Implement a print queue using a linked list. 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int job;
+    struct Node *next;
+};
+
+int main()
+{
+    struct Node *front = NULL;
+    struct Node *rear = NULL;
+    struct Node *newNode;
+    int n, job, i;
+
+    printf("Enter number of print jobs: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        newNode = malloc(sizeof(struct Node));
+
+        printf("Enter job number: ");
+        scanf("%d", &job);
+
+        newNode->job = job;
+        newNode->next = NULL;
+
+        if(rear == NULL)
+            front = rear = newNode;
+        else
+        {
+            rear->next = newNode;
+            rear = newNode;
+        }
+    }
+
+    printf("\nPrint Queue:\n");
+
+    while(front != NULL)
+    {
+        printf("Printing Job %d\n", front->job);
+
+        newNode = front;
+        front = front->next;
+
+        free(newNode);
+    }
+
+    return 0;
+}
+
+3 )
+Design an Undo feature using a linked-list stack. 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int action;
+    struct Node *next;
+};
+
+int main()
+{
+    struct Node *top = NULL;
+    struct Node *newNode;
+    int n, i, action;
+
+    printf("Enter number of actions: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        newNode = malloc(sizeof(struct Node));
+
+        printf("Enter action number: ");
+        scanf("%d", &action);
+
+        newNode->action = action;
+        newNode->next = top;
+        top = newNode;
+    }
+
+    if(top != NULL)
+    {
+        printf("Undo Action = %d\n", top->action);
+
+        newNode = top;
+        top = top->next;
+
+        free(newNode);
+    }
+
+    return 0;
+}
+
+4)
+Compare memory utilization of linked-list and array implementations. 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+int main()
+{
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Array memory = %lu bytes\n",
+           n * sizeof(int));
+
+    printf("Linked List memory = %lu bytes\n",
+           n * sizeof(struct Node));
+
+    return 0;
+}
