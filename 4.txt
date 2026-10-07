@@ -1,0 +1,279 @@
+Q) Write a C program to implement Stack using Array with Push, Pop, Peek and Display operations.
+
+#include <stdio.h>
+
+int stack[50];
+int top = -1;
+
+void push(int x)
+{
+    if(top == 49)
+        printf("Stack Full\n");
+    else
+        stack[++top] = x;
+}
+
+void pop()
+{
+    if(top == -1)
+        printf("Stack Empty\n");
+    else
+        printf("Popped = %d\n", stack[top--]);
+}
+
+void peek()
+{
+    if(top == -1)
+        printf("Stack Empty\n");
+    else
+        printf("Top = %d\n", stack[top]);
+}
+
+void display()
+{
+    int i;
+
+    for(i = top; i >= 0; i--)
+        printf("%d ", stack[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter element: ");
+        scanf("%d", &x);
+        push(x);
+    }
+
+    display();
+    peek();
+    pop();
+    display();
+
+    return 0;
+}
+
+
+Q)Write a C program to implement Circular Queue using Array with Enqueue, Dequeue, Peek and Display.
+
+#include <stdio.h>
+
+int queue[50];
+int front = -1, rear = -1;
+int size;
+
+void enqueue(int x)
+{
+    if((rear + 1) % size == front)
+    {
+        printf("Queue Full\n");
+        return;
+    }
+
+    if(front == -1)
+        front = 0;
+
+    rear = (rear + 1) % size;
+    queue[rear] = x;
+}
+
+void dequeue()
+{
+    if(front == -1)
+    {
+        printf("Queue Empty\n");
+        return;
+    }
+
+    printf("Deleted = %d\n", queue[front]);
+
+    if(front == rear)
+        front = rear = -1;
+    else
+        front = (front + 1) % size;
+}
+
+void peek()
+{
+    if(front == -1)
+        printf("Queue Empty\n");
+    else
+        printf("Front = %d\n", queue[front]);
+}
+
+void display()
+{
+    int i;
+
+    if(front == -1)
+    {
+        printf("Queue Empty\n");
+        return;
+    }
+
+    i = front;
+
+    while(1)
+    {
+        printf("%d ", queue[i]);
+
+        if(i == rear)
+            break;
+
+        i = (i + 1) % size;
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter queue size: ");
+    scanf("%d", &size);
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &x);
+        enqueue(x);
+    }
+
+    display();
+    peek();
+    dequeue();
+    display();
+
+    return 0;
+}
+
+
+1)A text editor stores recent actions. Implement a stack using an array with push, pop, peek and display operations.
+#include <stdio.h>
+
+int stack[50];
+int top = -1;
+
+void push(int x)
+{
+    stack[++top] = x;
+}
+
+void pop()
+{
+    if(top == -1)
+        printf("Nothing to undo\n");
+    else
+        printf("Undo Action = %d\n", stack[top--]);
+}
+
+void peek()
+{
+    if(top == -1)
+        printf("Stack Empty\n");
+    else
+        printf("Next Action = %d\n", stack[top]);
+}
+
+void display()
+{
+    int i;
+
+    for(i = top; i >= 0; i--)
+        printf("%d ", stack[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter number of actions: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter action number: ");
+        scanf("%d", &x);
+        push(x);
+    }
+
+    display();
+    peek();
+    pop();
+
+    return 0;
+}
+
+2)A college printer processes requests in FIFO order. Implement a queue using an array. DSA Lab Manual
+Code
+
+#include <stdio.h>
+
+int queue[50];
+int front = 0, rear = -1;
+
+void enqueue(int x)
+{
+    queue[++rear] = x;
+}
+
+void dequeue()
+{
+    if(front > rear)
+        printf("Queue Empty\n");
+    else
+        printf("Printed Job = %d\n", queue[front++]);
+}
+
+void peek()
+{
+    if(front <= rear)
+        printf("Next Job = %d\n", queue[front]);
+}
+
+void display()
+{
+    int i;
+
+    for(i = front; i <= rear; i++)
+        printf("%d ", queue[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, x, i;
+
+    printf("Enter number of print jobs: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter job number: ");
+        scanf("%d", &x);
+        enqueue(x);
+    }
+
+    display();
+    peek();
+    dequeue();
+    display();
+
+    return 0;
+}
+
+3)
