@@ -1,1 +1,51 @@
 Binary search tree with insert,delete,searching and inorder traversal
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node *left,*right;
+};
+struct node *insert(struct node *r,int x) {
+    if(!r) {
+        r=malloc(sizeof(struct node));
+        r->data=x; r->left=r->right=NULL;
+    }
+    else if(x<r->data) r->left=insert(r->left,x);
+    else r->right=insert(r->right,x);
+    return r;
+}
+void inorder(struct node *r) {
+    if(r) {
+        inorder(r->left);
+        printf("%d ",r->data);
+        inorder(r->right);
+    }
+}
+int search(struct node *r,int x) {
+    if(!r) return 0;
+    if(r->data==x) return 1;
+    if(x<r->data) return search(r->left,x);
+    return search(r->right,x);
+}
+int main() {
+    struct node *root=NULL;
+    int n,x,i,k;
+    printf("Enter n: ");
+    scanf("%d",&n);
+    for(i=0;i<n;i++) {
+        scanf("%d",&x);
+        root=insert(root,x);
+    }
+    printf("Inorder: ");
+    inorder(root);
+    printf("\nSearch key: ");
+    scanf("%d",&k);
+    if(search(root,k)) printf("Found");
+    else printf("Not found");
+    return 0;
+}
