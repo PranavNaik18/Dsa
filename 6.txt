@@ -1,5 +1,7 @@
 linked list using stack and queues 
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,13 +12,16 @@ struct node {
 
 struct node *top=NULL,*f=NULL,*r=NULL;
 
+// Stack Push
 void push(int x) {
     struct node *newnode=malloc(sizeof(struct node));
+    if(!newnode) return;
     newnode->data=x;
     newnode->next=top;
     top=newnode;
 }
 
+// Stack Pop
 void pop() {
     if(!top) printf("Stack Empty");
     else {
@@ -27,8 +32,23 @@ void pop() {
     }
 }
 
+// Stack Display
+void displayStack() {
+    struct node *newnode=top;
+    if(!top) printf("Stack Empty");
+    else {
+        printf("Stack: ");
+        while(newnode) {
+            printf("%d ",newnode->data);
+            newnode=newnode->next;
+        }
+    }
+}
+
+// Queue Enqueue
 void enqueue(int x) {
     struct node *newnode=malloc(sizeof(struct node));
+    if(!newnode) return;
     newnode->data=x;
     newnode->next=NULL;
 
@@ -39,6 +59,7 @@ void enqueue(int x) {
     }
 }
 
+// Queue Dequeue
 void dequeue() {
     if(!f) printf("Queue Empty");
     else {
@@ -50,29 +71,48 @@ void dequeue() {
     }
 }
 
+// Queue Display
+void displayQueue() {
+    struct node *newnode=f;
+    if(!f) printf("Queue Empty");
+    else {
+        printf("Queue: ");
+        while(newnode) {
+            printf("%d ",newnode->data);
+            newnode=newnode->next;
+        }
+    }
+}
+
 int main() {
     int ch,x;
+
     while(1) {
-        printf("\n1.Push 2.Pop 3.Enqueue 4.Dequeue 5.Exit\n");
+        printf("\n\n1.Push 2.Pop 3.Enqueue 4.Dequeue");
+        printf("\n5.Stack Display 6.Queue Display 7.Exit\n");
+        printf("Enter choice: ");
         scanf("%d",&ch);
 
         if(ch==1) {
+            printf("Enter value: ");
             scanf("%d",&x);
             push(x);
         }
         else if(ch==2) pop();
         else if(ch==3) {
+            printf("Enter value: ");
             scanf("%d",&x);
             enqueue(x);
         }
         else if(ch==4) dequeue();
-        else break;
+        else if(ch==5) displayStack();
+        else if(ch==6) displayQueue();
+        else if(ch==7) break;
+        else printf("Invalid choice");
     }
+
     return 0;
 }
-
-
-
 
 
 
