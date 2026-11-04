@@ -1,3 +1,108 @@
+linked list using stack and queues 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *top=NULL,*f=NULL,*r=NULL;
+
+void push(int x) {
+    struct node *newnode=malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=top;
+    top=newnode;
+}
+
+void pop() {
+    if(!top) printf("Stack Empty");
+    else {
+        struct node *newnode=top;
+        printf("Pop: %d",newnode->data);
+        top=top->next;
+        free(newnode);
+    }
+}
+
+void enqueue(int x) {
+    struct node *newnode=malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+
+    if(!r) f=r=newnode;
+    else {
+        r->next=newnode;
+        r=newnode;
+    }
+}
+
+void dequeue() {
+    if(!f) printf("Queue Empty");
+    else {
+        struct node *newnode=f;
+        printf("Dequeue: %d",newnode->data);
+        f=f->next;
+        if(!f) r=NULL;
+        free(newnode);
+    }
+}
+
+int main() {
+    int ch,x;
+    while(1) {
+        printf("\n1.Push 2.Pop 3.Enqueue 4.Dequeue 5.Exit\n");
+        scanf("%d",&ch);
+
+        if(ch==1) {
+            scanf("%d",&x);
+            push(x);
+        }
+        else if(ch==2) pop();
+        else if(ch==3) {
+            scanf("%d",&x);
+            enqueue(x);
+        }
+        else if(ch==4) dequeue();
+        else break;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Q)Write a C program to implement Stack using Linked List.
 
 #include <stdio.h>
