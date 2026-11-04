@@ -1,1 +1,29 @@
 Knapsack 0/1 using dynamic programming
+
+
+
+#include <stdio.h>
+int main() {
+    int w[20],v[20],dp[20][100];
+    int n,W,i,j;
+    printf("Enter number of items: ");
+    scanf("%d",&n);
+    printf("Enter weights:\n");
+    for(i=1;i<=n;i++) scanf("%d",&w[i]);
+    printf("Enter values:\n");
+    for(i=1;i<=n;i++) scanf("%d",&v[i]);
+    printf("Enter capacity: ");
+    scanf("%d",&W);
+
+    for(i=0;i<=n;i++)
+        for(j=0;j<=W;j++) {
+            if(i==0||j==0) dp[i][j]=0;
+            else if(w[i]<=j) {
+                int x=v[i]+dp[i-1][j-w[i]];
+                dp[i][j]=(x>dp[i-1][j])?x:dp[i-1][j];
+            }
+            else dp[i][j]=dp[i-1][j];
+        }
+    printf("Maximum value = %d",dp[n][W]);
+    return 0;
+}
