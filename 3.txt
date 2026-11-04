@@ -1,5 +1,6 @@
 5)Develop a C program to map the elements of a 2-D array marks[50][5] into a 1-D array, read marks, display the 1-D array, and retrieve marks using the mapping formula.
 
+
 #include <stdio.h>
 
 int main()
@@ -19,17 +20,20 @@ int main()
         for(j = 0; j < 5; j++)
         {
             scanf("%d", &marks[i][j]);
-
             oneD[i * 5 + j] = marks[i][j];
         }
     }
 
     printf("\n1-D Array:\n");
+    printf("Student\tMarks\n");
 
-    for(i = 0; i < n * 5; i++)
-        printf("%d ", oneD[i]);
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < 5; j++)
+            printf("%d\t%d\n", i + 1, oneD[i * 5 + j]);
+    }
 
-    printf("\n\nEnter student number (0 to %d): ", n - 1);
+    printf("\nEnter student number (0 to %d):", n - 1);
     scanf("%d", &student);
 
     printf("Enter subject number (0 to 4): ");
@@ -41,8 +45,6 @@ int main()
 
     return 0;
 }
-
-
 
 
 
